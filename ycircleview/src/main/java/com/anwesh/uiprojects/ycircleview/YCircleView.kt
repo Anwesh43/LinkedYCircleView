@@ -136,7 +136,7 @@ class YCircleView(ctx : Context) : View(ctx) {
         private var prev : YCNode? = null
 
         init {
-
+            addNeighbor()
         }
 
         fun addNeighbor() {
@@ -195,6 +195,27 @@ class YCircleView(ctx : Context) : View(ctx) {
 
         fun startUpdating(cb : () -> Unit) {
             curr.startUpdating(cb)
+        }
+    }
+
+    data class Renderer(var view : YCircleView) {
+        val animator : Animator  = Animator(view)
+        val yc : YCircle = YCircle(0)
+
+        fun render(canvas : Canvas, paint : Paint) {
+            canvas.drawColor(backColor)
+            yc.draw(canvas, paint)
+            animator.animate {
+                yc.update {i, scl ->
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            yc.startUpdating {
+                animator.start()
+            }
         }
     }
 }
