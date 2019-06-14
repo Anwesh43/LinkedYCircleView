@@ -219,4 +219,13 @@ class YCircleView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    companion object {
+
+        fun create(activity : Activity) : YCircleView {
+            val view : YCircleView = YCircleView(activity)
+            activity.setContentView(view)
+            return view
+        }
+    }
 }
