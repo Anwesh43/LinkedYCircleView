@@ -21,8 +21,9 @@ val strokeFactor : Int = 90
 val sizeFactor : Float = 2.9f
 val foreColor : Int = Color.parseColor("#311B92")
 val backColor : Int = Color.parseColor("#BDBDBD")
-val sweepDeg : Float = 60f
-val rotDeg : Float = 90f
+val sweepDeg : Float = 75f
+val rotDeg : Float = -90f
+val delay : Long = 20
 
 fun Int.inverse() : Float = 1f / this
 fun Float.scaleFactor() : Float = Math.floor(this / scDiv).toFloat()
@@ -59,6 +60,7 @@ fun Canvas.drawYCNode(i : Int, scale : Float, paint : Paint) {
     save()
     translate(w / 2, gap * (i + 1))
     rotate(rotDeg * sc2)
+    drawLine(-size, 0f, 0f, 0f, paint)
     for (j in 0..(circles - 1)) {
         drawYArc(j, size, sc1, paint)
     }
@@ -109,7 +111,7 @@ class YCircleView(ctx : Context) : View(ctx) {
             if (animated) {
                 cb()
                 try {
-                    Thread.sleep(50)
+                    Thread.sleep(delay)
                     view.invalidate()
                 } catch(ex : Exception) {
 
